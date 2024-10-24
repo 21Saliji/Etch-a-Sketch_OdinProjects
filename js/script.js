@@ -1,14 +1,34 @@
 const grid = document.querySelector('.grid-container');
 
-// Use a nested for loop to create the grid cells
-for (let i = 0; i < 16; i++) {
-  for (let j = 0; j < 16; j++) {
-    const cell = document.createElement('div');
-    cell.classList.add('cell');
-    cell.addEventListener('mouseover', changeColorOnHover);
-    grid.appendChild(cell);
-  }
+function createGrid(size) {
+    grid.innerHTML = ''; // Clear any existing grid
+    grid.style.gridTemplateRows = `repeat(${size}, 1fr)`;
+    grid.style.gridTemplateColumns = `repeat(${size}, 1fr)`;
+
+
+    for (let i = 0; i < size; i++) {
+        for (let j = 0; j < size; j++) {
+            const cell = document.createElement('div');
+            cell.classList.add('cell');
+            cell.addEventListener('mouseover', changeColorOnHover);
+            grid.appendChild(cell);
+        }
+    }
 }
+
+
+const button = document.getElementById('myButton');
+
+button.addEventListener('click', function() {
+    let gridSize = parseInt(prompt('Enter the number of squares per side for the new grid (e.g., 16 for a 16x16 grid):'));
+
+    if (!isNaN(gridSize) && gridSize > 0 && gridSize <= 100) {
+        createGrid(gridSize);
+    } else {
+        alert('Please enter a valid number between 1 and 100.');
+    }
+});
+
 
 function getRandomColor() {
     const letters = '0123456789ABCDEF';
